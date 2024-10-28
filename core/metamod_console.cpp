@@ -646,82 +646,82 @@ bool Command_ClientMeta(MMSPlayer_t client, IMetamodSourceCommandInfo *info)
 {
 	const char *cmd = info->GetArg(0);
 
-	if (strcmp(cmd, "meta") == 0)
-	{
-		unsigned int args = info->GetArgCount();
-		if (args == 1)
-		{
-			const char *subcmd = info->GetArg(1);
+	// if (strcmp(cmd, "meta") == 0)
+	// {
+	// 	unsigned int args = info->GetArgCount();
+	// 	if (args == 1)
+	// 	{
+	// 		const char *subcmd = info->GetArg(1);
 
-			if (strcmp(subcmd, "credits") == 0)
-			{
-				ReplyCredits(client);
+	// 		if (strcmp(subcmd, "credits") == 0)
+	// 		{
+	// 			ReplyCredits(client);
 
-				return true;
-			}
-			else if(strcmp(subcmd, "version") == 0)
-			{
-				ReplyVersion(client);
+	// 			return true;
+	// 		}
+	// 		else if(strcmp(subcmd, "version") == 0)
+	// 		{
+	// 			ReplyVersion(client);
 
-				return true;
-			}
-			else if(strcmp(subcmd, "list") == 0)
-			{
-				CPluginManager::CPlugin *pl;
-				ISmmPlugin *plapi;
-				const char *plname;
-				PluginIter i;
-				char buffer[256];
-				size_t len = 0;
-				int plnum = 0;
+	// 			return true;
+	// 		}
+	// 		else if(strcmp(subcmd, "list") == 0)
+	// 		{
+	// 			CPluginManager::CPlugin *pl;
+	// 			ISmmPlugin *plapi;
+	// 			const char *plname;
+	// 			PluginIter i;
+	// 			char buffer[256];
+	// 			size_t len = 0;
+	// 			int plnum = 0;
 
-				for (i = g_PluginMngr._begin(); i != g_PluginMngr._end(); i++, len=0)
-				{
-					pl = (*i);
-					if (pl && pl->m_Status == Pl_Running)
-					{
-						plapi = pl->m_API;
-						if (!plapi || !plapi->QueryRunning(NULL, 0))
-						{
-							continue;
-						}
-						plnum++;
+	// 			for (i = g_PluginMngr._begin(); i != g_PluginMngr._end(); i++, len=0)
+	// 			{
+	// 				pl = (*i);
+	// 				if (pl && pl->m_Status == Pl_Running)
+	// 				{
+	// 					plapi = pl->m_API;
+	// 					if (!plapi || !plapi->QueryRunning(NULL, 0))
+	// 					{
+	// 						continue;
+	// 					}
+	// 					plnum++;
 
-						len += UTIL_Format(buffer, sizeof(buffer), "  [%02d]", plnum);
+	// 					len += UTIL_Format(buffer, sizeof(buffer), "  [%02d]", plnum);
 
-						plname = IS_STR_FILLED(plapi->GetName()) ? plapi->GetName() : pl->m_File.c_str();
-						len += UTIL_Format(&buffer[len], sizeof(buffer)-len, " %s", plname);
+	// 					plname = IS_STR_FILLED(plapi->GetName()) ? plapi->GetName() : pl->m_File.c_str();
+	// 					len += UTIL_Format(&buffer[len], sizeof(buffer)-len, " %s", plname);
 
-						if (IS_STR_FILLED(plapi->GetVersion()))
-						{
-							len += UTIL_Format(&buffer[len], sizeof(buffer)-len, " (%s)", plapi->GetVersion());
-						}
-						if (IS_STR_FILLED(plapi->GetAuthor()))
-						{
-							UTIL_Format(&buffer[len], sizeof(buffer)-len, " by %s", plapi->GetAuthor());
-						}
+	// 					if (IS_STR_FILLED(plapi->GetVersion()))
+	// 					{
+	// 						len += UTIL_Format(&buffer[len], sizeof(buffer)-len, " (%s)", plapi->GetVersion());
+	// 					}
+	// 					if (IS_STR_FILLED(plapi->GetAuthor()))
+	// 					{
+	// 						UTIL_Format(&buffer[len], sizeof(buffer)-len, " by %s", plapi->GetAuthor());
+	// 					}
 
-						CLIENT_CONMSG(client, "%s\n", buffer);
-					}
-				}
+	// 					CLIENT_CONMSG(client, "%s\n", buffer);
+	// 				}
+	// 			}
 
-				if (!plnum)
-				{
-					CLIENT_CONMSG(client, "No active plugins loaded.\n");
-				}
+	// 			if (!plnum)
+	// 			{
+	// 				CLIENT_CONMSG(client, "No active plugins loaded.\n");
+	// 			}
 
-				return true;
-			}
-		}
+	// 			return true;
+	// 		}
+	// 	}
 
-		CLIENT_CONMSG(client, "Metamod:Source Menu\n");
-		CLIENT_CONMSG(client, "usage: meta <command>\n");
-		CLIENT_CONMSG(client, "  credits - About Metamod:Source\n");
-		CLIENT_CONMSG(client, "  list    - List plugins\n");
-		CLIENT_CONMSG(client, "  version - Version information\n");
+	// 	CLIENT_CONMSG(client, "Metamod:Source Menu\n");
+	// 	CLIENT_CONMSG(client, "usage: meta <command>\n");
+	// 	CLIENT_CONMSG(client, "  credits - About Metamod:Source\n");
+	// 	CLIENT_CONMSG(client, "  list    - List plugins\n");
+	// 	CLIENT_CONMSG(client, "  version - Version information\n");
 
-		return true;
-	}
+	// 	return true;
+	// }
 
 	return false;
 }
